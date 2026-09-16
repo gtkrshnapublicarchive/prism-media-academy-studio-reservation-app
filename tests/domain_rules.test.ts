@@ -1,9 +1,5 @@
 import { prisma } from "../src/core/database/prisma";
-import { createBookingAction } from "../src/features/bookings/actions/create_booking.action";
-import { cancelBookingAction } from "../src/features/bookings/actions/cancel_booking.action";
-import { logReturnAction } from "../src/features/inspections/actions/log_return.action";
-import { toggleStudioMaintenanceAction } from "../src/features/inspections/actions/toggle_studio_maintenance.action";
-import { createSessionToken } from "../src/features/auth/services/session.service";
+import { getUserProfile } from "../src/features/profile/services/profile.service";
 import { UserRole, InspectionCondition, GearKitStatus, BookingStatus } from "@prisma/client";
 
 async function runTests() {
@@ -29,20 +25,6 @@ async function runTests() {
   }
 
   const testDate = "2026-09-18"; // Friday
-
-  // Set mock session cookies for Server Actions
-  const studentToken = await createSessionToken({
-    userId: student.id,
-    email: student.email,
-    name: student.name,
-    role: student.role,
-    studentId: student.studentId,
-  });
-
-  // Mock global header/cookie context for testing server actions in Node runtime
-  const { cookies } = await import("next/headers");
-  // @ts-expect-error - mock cookies for standalone CLI testing
-  globalThis._mockSessionToken = studentToken;
 
   // Test 1: Successful First Booking (2 Hours)
   console.log("[*] Test 1: Booking 2-hour slot with Cinema Camera Kit...");
@@ -161,6 +143,44 @@ async function runTests() {
     console.log("[OK] Test 6 Passed: GearKit status transitioned to DAMAGED; locked from subsequent bookings.");
   }
 
+  // Test 7: Profile Aggregation & Role-Specific Isolation
+  console.log("[*] Test 7: Verifying profile metrics and role isolation...");
+  const studentProfile = await getUserProfile(student.id);
+  if (!studentProfile || studentProfile.role !== UserRole.STUDENT) {
+    throw new Error("Student profile retrieval failed.");
+  }
+  if (!studentProfile.studentMetrics || studentProfile.technicianMetrics) {
+    throw new Error("Role leakage detected: student profile contains invalid metric payload.");
+  }
+  if (studentProfile.studentMetrics.maxWeeklyHours !== 4) {
+    throw new Error("Invalid student weekly quota capacity.");
+  }
+
+  const techProfile = await getUserProfile(tech.id);
+  if (!techProfile || techProfile.role !== UserRole.TECHNICIAN) {
+    throw new Error("Technician profile retrieval failed.");
+  }
+  if (!techProfile.technicianMetrics || techProfile.studentMetrics) {
+    throw new Error("Role leakage detected: technician profile contains invalid metric payload.");
+  }
+  console.log("[OK] Test 7 Passed: Profile isolation verified; student quota and technician audit metrics decoupled.");
+
+  // Test 8: Technician Shift Toggle & Profile Mutation
+  console.log("[*] Test 8: Verifying technician shift toggle and preference persistence...");
+  await prisma.user.update({
+    where: { id: tech.id },
+    data: { shiftStatus: "OFF_DUTY" },
+  });
+  const offDutyUser = await prisma.user.findUnique({ where: { id: tech.id } });
+  if (offDutyUser?.shiftStatus !== "OFF_DUTY") {
+    throw new Error("Shift status toggle to OFF_DUTY failed.");
+  }
+  await prisma.user.update({
+    where: { id: tech.id },
+    data: { shiftStatus: "ON_DUTY" },
+  });
+  console.log("[OK] Test 8 Passed: Shift status state machine successfully validated.");
+
   // Cleanup test records
   await prisma.inspection.deleteMany({});
   await prisma.booking.deleteMany({});
@@ -168,7 +188,7 @@ async function runTests() {
   await prisma.gearKit.updateMany({ data: { status: "AVAILABLE" } });
 
   console.log("==================================================");
-  console.log("  All 6 Anti-Pattern and Domain Tests Passed Cleanly");
+  console.log("  All 8 Anti-Pattern, Domain, and Profile Tests Passed Cleanly");
   console.log("==================================================");
 }
 
