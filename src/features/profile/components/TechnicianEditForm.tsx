@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { updateProfileAction } from "../actions/update_profile.action";
 import { FullUserProfile } from "../types/profile.types";
 import { ProfileFormField, VerifiedField } from "./ProfileFormField";
+import { SelectDropdown } from "@/shared/components/SelectDropdown";
 import { User, Phone, AlignLeft, CheckCircle2, AlertCircle, MapPin } from "lucide-react";
 
 interface TechnicianEditFormProps {
@@ -75,18 +76,15 @@ export function TechnicianEditForm({ profile }: TechnicianEditFormProps) {
             />
           </ProfileFormField>
 
-          <ProfileFormField label="Assigned Counter Station" icon={<MapPin className="w-4 h-4" />}>
-            <select
+          <div>
+            <label className="block text-xs font-medium text-black/70 mb-1.5">Assigned Counter Station</label>
+            <SelectDropdown
               name="station"
               defaultValue={profile.station || STATIONS[0]}
-              className="w-full pl-10 pr-8 py-2.5 bg-[#fbfbfa] border border-black/10 rounded-xl text-sm text-black/90 focus:outline-none focus:border-black/30 appearance-none cursor-pointer"
-            >
-              {STATIONS.map((st) => (
-                <option key={st} value={st}>{st}</option>
-              ))}
-            </select>
-            <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-black/40 text-xs">▼</div>
-          </ProfileFormField>
+              options={STATIONS}
+              icon={<MapPin className="w-4 h-4" />}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

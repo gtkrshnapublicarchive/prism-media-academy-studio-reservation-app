@@ -4,6 +4,7 @@ import { useState } from "react";
 import { X, AlertCircle, Loader2 } from "lucide-react";
 import { GearKitSummary, OperationalSlot } from "../types/booking.types";
 import { createBookingAction } from "../actions/create_booking.action";
+import { RoundCheckbox } from "@/shared/components/RoundCheckbox";
 
 interface BookingModalProps {
   studioId: string;
@@ -193,19 +194,17 @@ export function BookingModal({
           </div>
 
           <div className="pt-2 border-t border-black/[0.06]">
-            <label className="flex items-start gap-2.5 cursor-pointer">
-              <input
-                type="checkbox"
-                required
-                checked={agreementSigned}
-                onChange={(e) => setAgreementSigned(e.target.checked)}
-                className="mt-0.5 rounded-xs"
-              />
-              <span className="text-[11px] text-black/70 leading-normal">
-                I confirm responsibility for studio and equipment care, and understand that cancellations
-                under 4 hours prior to session start are blocked per academy policies.
-              </span>
-            </label>
+            <RoundCheckbox
+              required
+              checked={agreementSigned}
+              onChange={setAgreementSigned}
+              label={
+                <span className="text-[11px] font-normal text-black/70 leading-normal">
+                  I confirm responsibility for studio and equipment care, and understand that cancellations
+                  under 4 hours prior to session start are blocked per academy policies.
+                </span>
+              }
+            />
           </div>
 
           <div className="pt-2 flex items-center justify-end gap-2">

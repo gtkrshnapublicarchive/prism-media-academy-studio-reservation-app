@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { updatePreferencesAction } from "../actions/update_preferences.action";
 import { FullUserProfile } from "../types/profile.types";
 import { CheckCircle2, AlertCircle } from "lucide-react";
+import { RoundCheckbox } from "@/shared/components/RoundCheckbox";
 
 interface NotificationPreferencesFormProps {
   profile: FullUserProfile;
@@ -57,57 +58,36 @@ export function NotificationPreferencesForm({ profile }: NotificationPreferences
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <label className="flex items-start gap-3 p-3.5 rounded-xl border border-black/[0.06] hover:bg-black/[0.01] transition-colors cursor-pointer">
-          <input
-            type="checkbox"
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="p-3.5 rounded-xl border border-black/[0.06] hover:bg-black/[0.01] transition-colors">
+          <RoundCheckbox
             name="notifySessionReminders"
             defaultChecked={profile.notifySessionReminders}
-            className="mt-0.5 w-4 h-4 rounded-[5px] accent-[#252724] cursor-pointer"
+            label="Session Reminder (2 Hours Prior)"
+            description="Receive an automated reminder with studio door code before your booking start."
+            className="w-full"
           />
-          <div>
-            <span className="block text-xs font-semibold text-black/90">
-              Session Reminder (2 Hours Prior)
-            </span>
-            <span className="block text-[11px] text-black/50 mt-0.5">
-              Receive an automated reminder with studio door code before your booking start.
-            </span>
-          </div>
-        </label>
+        </div>
 
-        <label className="flex items-start gap-3 p-3.5 rounded-xl border border-black/[0.06] hover:bg-black/[0.01] transition-colors cursor-pointer">
-          <input
-            type="checkbox"
+        <div className="p-3.5 rounded-xl border border-black/[0.06] hover:bg-black/[0.01] transition-colors">
+          <RoundCheckbox
             name="notifyCancellationCutoff"
             defaultChecked={profile.notifyCancellationCutoff}
-            className="mt-0.5 w-4 h-4 rounded-[5px] accent-[#252724] cursor-pointer"
+            label="4-Hour Cancellation Deadline Warning"
+            description="Alert sent 30 minutes before the 4-hour self-service cancellation window closes."
+            className="w-full"
           />
-          <div>
-            <span className="block text-xs font-semibold text-black/90">
-              4-Hour Cancellation Deadline Warning
-            </span>
-            <span className="block text-[11px] text-black/50 mt-0.5">
-              Alert sent 30 minutes before the 4-hour self-service cancellation window closes.
-            </span>
-          </div>
-        </label>
+        </div>
 
-        <label className="flex items-start gap-3 p-3.5 rounded-xl border border-black/[0.06] hover:bg-black/[0.01] transition-colors cursor-pointer">
-          <input
-            type="checkbox"
+        <div className="p-3.5 rounded-xl border border-black/[0.06] hover:bg-black/[0.01] transition-colors">
+          <RoundCheckbox
             name="notifyGearReady"
             defaultChecked={profile.notifyGearReady}
-            className="mt-0.5 w-4 h-4 rounded-[5px] accent-[#252724] cursor-pointer"
+            label="Gear Kit Counter Staging Alert"
+            description="Notification when the shift technician stages your reserved equipment at the counter."
+            className="w-full"
           />
-          <div>
-            <span className="block text-xs font-semibold text-black/90">
-              Gear Kit Counter Staging Alert
-            </span>
-            <span className="block text-[11px] text-black/50 mt-0.5">
-              Notification when the shift technician stages your reserved equipment at the counter.
-            </span>
-          </div>
-        </label>
+        </div>
 
         <div className="flex justify-end pt-2">
           <button
