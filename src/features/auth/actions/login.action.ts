@@ -4,20 +4,17 @@ import { authenticateStudent } from "../services/auth.service";
 import { setSessionCookie } from "../services/session.service";
 import { redirect } from "next/navigation";
 
-export async function loginStudentAction(
-  _prevState: { error?: string } | null,
-  formData: FormData
-): Promise<{ error?: string }> {
-  const identifier = formData.get("identifier") as string;
-  const password = formData.get("password") as string;
+export async function loginStudentAction(formData: FormData): Promise<void> {
+  const identifier = (formData.get("identifier") as string) || "";
+  const password = (formData.get("password") as string) || "";
 
   if (!identifier || !password) {
-    return { error: "Please enter your student email or ID, and password." };
+    redirect("/login?error=Please+enter+your+student+credentials");
   }
 
   const result = await authenticateStudent(identifier, password);
   if (!result.success || !result.user) {
-    return { error: result.error || "Authentication failed." };
+    redirect(`/login?error=${encodeURIComponent(result.error || "Authentication failed")}`);
   }
 
   await setSessionCookie({
