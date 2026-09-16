@@ -72,6 +72,7 @@ export async function logReturnAction(input: LogReturnInput) {
 
     revalidatePath("/technician");
     revalidatePath("/");
+    revalidatePath("/calendar");
     return { success: true };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to record return inspection.";

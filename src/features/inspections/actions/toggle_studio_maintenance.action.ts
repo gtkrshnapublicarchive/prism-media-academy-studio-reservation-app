@@ -31,5 +31,6 @@ export async function toggleStudioMaintenanceAction(studioId: string) {
 
   revalidatePath("/technician");
   revalidatePath("/");
+  revalidatePath("/calendar");
   return { success: true, status: newStatus };
 }

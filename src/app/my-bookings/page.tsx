@@ -29,7 +29,7 @@ export default async function MyBookingsPage() {
         </div>
 
         <Link
-          href="/"
+          href="/calendar"
           className="px-4 py-2 rounded-xl bg-[#252724] hover:bg-[#3b3e39] text-white text-xs font-medium transition-colors flex items-center gap-1.5 shadow-xs"
         >
           <CalendarPlus className="w-3.5 h-3.5" />
@@ -49,7 +49,7 @@ export default async function MyBookingsPage() {
             You currently have no active or completed studio reservations this semester.
           </p>
           <Link
-            href="/"
+            href="/calendar"
             className="inline-block mt-4 px-4 py-2 rounded-xl bg-[#252724] text-white text-xs font-medium hover:bg-[#3b3e39] transition-colors"
           >
             Explore Availability Schedule

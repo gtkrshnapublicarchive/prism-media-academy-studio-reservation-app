@@ -23,13 +23,13 @@ export function HeroSection() {
 
           {/* Action CTAs */}
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href="#timetable"
+            <Link
+              href="/calendar"
               className="px-6 py-3 rounded-xl bg-[#252724] hover:bg-[#3b3e39] text-white text-xs font-medium transition-all shadow-xs flex items-center gap-2"
             >
               <Calendar className="w-4 h-4" />
               <span>Book a Production Slot</span>
-            </a>
+            </Link>
             <a
               href="#studios"
               className="px-6 py-3 rounded-xl bg-white border border-black/[0.1] hover:border-black/30 text-black/80 hover:text-black text-xs font-medium transition-all shadow-2xs flex items-center gap-2"

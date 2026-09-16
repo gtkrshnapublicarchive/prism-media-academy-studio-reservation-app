@@ -117,6 +117,7 @@ export async function createBookingAction(
     });
 
     revalidatePath("/");
+    revalidatePath("/calendar");
     revalidatePath("/my-bookings");
     return { success: true, ...result };
   } catch (err: unknown) {

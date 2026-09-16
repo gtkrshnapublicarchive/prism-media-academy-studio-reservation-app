@@ -30,5 +30,6 @@ export async function checkoutSessionAction(bookingId: string) {
 
   revalidatePath("/technician");
   revalidatePath("/");
+  revalidatePath("/calendar");
   return { success: true };
 }

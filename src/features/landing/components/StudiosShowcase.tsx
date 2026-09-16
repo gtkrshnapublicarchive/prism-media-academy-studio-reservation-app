@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Users, Volume2, Video, Camera, ArrowUpRight } from "lucide-react";
 
 const STUDIOS_DATA = [
@@ -73,13 +74,13 @@ export function StudiosShowcase() {
             Each studio is purpose-built to eliminate technical friction, giving student creators the exact environment required for course deliverables.
           </p>
         </div>
-        <a
-          href="#timetable"
+        <Link
+          href="/calendar"
           className="text-xs font-semibold text-black/80 hover:text-black flex items-center gap-1 group pb-1"
         >
           <span>View Real-Time Availability</span>
           <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -152,12 +153,12 @@ export function StudiosShowcase() {
                       {studio.idealFor}
                     </span>
                   </div>
-                  <a
-                    href="#timetable"
+                  <Link
+                    href="/calendar"
                     className="px-3.5 py-1.5 rounded-xl bg-[#252724] hover:bg-[#3b3e39] text-white text-xs font-medium transition-colors"
                   >
                     Select Room
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -27,7 +27,7 @@ export async function Navbar() {
 
         <nav className="flex items-center gap-4">
           <Link
-            href="/"
+            href="/calendar"
             className="text-sm font-medium text-black/70 hover:text-black transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-black/[0.04]"
           >
             <Calendar className="w-4 h-4" />

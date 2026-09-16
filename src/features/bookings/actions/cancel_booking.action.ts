@@ -49,6 +49,7 @@ export async function cancelBookingAction(bookingId: string): Promise<CancelBook
   });
 
   revalidatePath("/");
+  revalidatePath("/calendar");
   revalidatePath("/my-bookings");
   return { success: true };
 }
