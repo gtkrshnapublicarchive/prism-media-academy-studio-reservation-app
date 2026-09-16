@@ -32,13 +32,12 @@ export function RoundCheckbox({
   const [internalChecked, setInternalChecked] = useState<boolean>(defaultChecked);
   const currentChecked = isControlled ? controlledChecked : internalChecked;
 
-  const handleToggle = () => {
-    if (disabled) return;
-    const nextState = !currentChecked;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextChecked = e.target.checked;
     if (!isControlled) {
-      setInternalChecked(nextState);
+      setInternalChecked(nextChecked);
     }
-    onChange?.(nextState);
+    onChange?.(nextChecked);
   };
 
   return (
@@ -53,27 +52,21 @@ export function RoundCheckbox({
           id={id}
           name={name}
           checked={currentChecked}
-          onChange={(e) => {
-            if (!isControlled) {
-              setInternalChecked(e.target.checked);
-            }
-            onChange?.(e.target.checked);
-          }}
+          onChange={handleChange}
           disabled={disabled}
           required={required}
           className="sr-only peer"
         />
         <div
-          onClick={handleToggle}
-          className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 shadow-2xs peer-focus-visible:ring-2 peer-focus-visible:ring-[#668c63] peer-focus-visible:ring-offset-2 ${
+          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 shadow-2xs peer-focus-visible:ring-2 peer-focus-visible:ring-[#668c63] peer-focus-visible:ring-offset-2 ${
             currentChecked
-              ? "bg-[#252724] border-[#252724] text-white"
-              : "bg-white border-black/25 group-hover:border-black/50"
+              ? "bg-[#252724] border-[#252724] text-white shadow-xs"
+              : "bg-white border-black/30 group-hover:border-black/60 shadow-2xs"
           }`}
         >
           <Check
-            className={`w-3 h-3 stroke-[2.5] text-[#eef2ec] transition-all duration-150 transform ${
-              currentChecked ? "scale-100 opacity-100" : "scale-50 opacity-0"
+            className={`w-3.5 h-3.5 stroke-[3] text-white transition-all duration-150 transform ${
+              currentChecked ? "scale-100 opacity-100" : "scale-0 opacity-0"
             }`}
           />
         </div>
@@ -82,14 +75,14 @@ export function RoundCheckbox({
       {(label || description) && (
         <div className="flex flex-col text-left">
           {label && (
-            <span className="text-xs font-semibold text-black/90 group-hover:text-black transition-colors leading-tight">
+            <div className="text-xs font-semibold text-black/90 group-hover:text-black transition-colors leading-tight">
               {label}
-            </span>
+            </div>
           )}
           {description && (
-            <span className="text-[11px] text-black/50 mt-0.5 leading-normal">
+            <div className="text-[11px] text-black/55 mt-0.5 leading-normal">
               {description}
-            </span>
+            </div>
           )}
         </div>
       )}

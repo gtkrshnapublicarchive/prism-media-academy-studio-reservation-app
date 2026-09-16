@@ -26,7 +26,8 @@ h1, h2, h3, .font-editorial {
 }
 
 /* Custom themed form controls */
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
   accent-color: #252724;
 }
 

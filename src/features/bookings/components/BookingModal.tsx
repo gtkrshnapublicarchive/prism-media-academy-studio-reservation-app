@@ -110,7 +110,7 @@ export function BookingModal({
                   value=""
                   checked={selectedKitId === ""}
                   onChange={() => setSelectedKitId("")}
-                  className="mt-0.5"
+                  className="mt-0.5 w-4 h-4 accent-[#252724] cursor-pointer"
                 />
                 <div>
                   <p className="font-semibold text-black/90">Studio Room Only (No Gear Kit)</p>
@@ -136,7 +136,7 @@ export function BookingModal({
                     disabled={!kit.isAvailableForSlot}
                     checked={selectedKitId === kit.id}
                     onChange={() => setSelectedKitId(kit.id)}
-                    className="mt-0.5"
+                    className="mt-0.5 w-4 h-4 accent-[#252724] cursor-pointer"
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -194,17 +194,31 @@ export function BookingModal({
           </div>
 
           <div className="pt-2 border-t border-black/[0.06]">
-            <RoundCheckbox
-              required
-              checked={agreementSigned}
-              onChange={setAgreementSigned}
-              label={
-                <span className="text-[11px] font-normal text-black/70 leading-normal">
-                  I confirm responsibility for studio and equipment care, and understand that cancellations
-                  under 4 hours prior to session start are blocked per academy policies.
-                </span>
-              }
-            />
+            <div
+              className={`p-3.5 rounded-xl border transition-all ${
+                agreementSigned
+                  ? "bg-[#eef2ec]/60 border-[#344c32]/30 shadow-2xs"
+                  : "bg-[#fbfbfa] border-black/[0.08] hover:border-black/20"
+              }`}
+            >
+              <RoundCheckbox
+                required
+                checked={agreementSigned}
+                onChange={setAgreementSigned}
+                label={
+                  <span className="text-xs font-semibold text-black/90 block">
+                    Equipment Care &amp; Policy Agreement
+                  </span>
+                }
+                description={
+                  <span className="text-[11px] text-black/60 block mt-0.5 leading-relaxed">
+                    I confirm responsibility for studio and equipment care, and understand that cancellations
+                    under 4 hours prior to session start are blocked per academy policies.
+                  </span>
+                }
+                className="w-full"
+              />
+            </div>
           </div>
 
           <div className="pt-2 flex items-center justify-end gap-2">
