@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowDown, Calendar, ShieldCheck, Film, Sparkles } from "lucide-react";
+import { ArrowDown, Calendar, ShieldCheck, Sparkles } from "lucide-react";
 
 export function HeroSection() {
   return (

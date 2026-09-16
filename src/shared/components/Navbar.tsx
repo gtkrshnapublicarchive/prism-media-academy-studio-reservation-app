@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getCurrentSession } from "@/features/auth/services/session.service";
 import { logoutAction } from "@/features/auth/actions/logout.action";
-import { Film, Calendar, User as UserIcon, LogOut } from "lucide-react";
+import { Film, Calendar, User as UserIcon, LogOut, Settings, LayoutDashboard } from "lucide-react";
 
 export async function Navbar() {
   const session = await getCurrentSession();
@@ -43,17 +43,24 @@ export async function Navbar() {
                 <UserIcon className="w-4 h-4" />
                 <span>My Bookings</span>
               </Link>
+              <Link
+                href="/profile"
+                className="text-sm font-medium text-black/70 hover:text-black transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-black/[0.04]"
+              >
+                <Settings className="w-4 h-4" />
+                <span>Profile</span>
+              </Link>
               <div className="h-4 w-px bg-black/[0.12] mx-1" />
               <div className="flex items-center gap-2.5">
-                <div className="text-right hidden sm:block">
+                <Link href="/profile" className="text-right hidden sm:block hover:opacity-80 transition-opacity">
                   <p className="text-xs font-semibold text-black/90 leading-none">{session.name}</p>
                   <p className="text-[10px] text-black/50 leading-tight mt-0.5">{session.studentId}</p>
-                </div>
+                </Link>
                 <form action={logoutAction}>
                   <button
                     type="submit"
                     title="Sign Out"
-                    className="p-2 rounded-xl text-black/60 hover:text-black hover:bg-black/[0.05] transition-colors"
+                    className="p-2 rounded-xl text-black/60 hover:text-black hover:bg-black/[0.05] transition-colors cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                   </button>
@@ -61,14 +68,27 @@ export async function Navbar() {
               </div>
             </>
           ) : session && session.role === "TECHNICIAN" ? (
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-black/10 text-black/80">
-                Staff Session: {session.name}
-              </span>
+            <div className="flex items-center gap-2.5">
+              <Link
+                href="/technician"
+                className="text-sm font-medium text-black/70 hover:text-black transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-black/[0.04]"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                <span>Floor Console</span>
+              </Link>
+              <Link
+                href="/profile"
+                className="text-sm font-medium text-black/70 hover:text-black transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-black/[0.04]"
+              >
+                <Settings className="w-4 h-4" />
+                <span>Staff Profile</span>
+              </Link>
+              <div className="h-4 w-px bg-black/[0.12] mx-1" />
               <form action={logoutAction}>
                 <button
                   type="submit"
-                  className="p-1.5 rounded-xl text-black/60 hover:text-black hover:bg-black/[0.05] transition-colors"
+                  title="Sign Out"
+                  className="p-1.5 rounded-xl text-black/60 hover:text-black hover:bg-black/[0.05] transition-colors cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
