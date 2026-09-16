@@ -107,6 +107,13 @@ async function main() {
       studentId: "STU-2026-0891",
       role: UserRole.STUDENT,
       passwordHash,
+      department: "Film & Television Production",
+      phone: "+1 (555) 234-8910",
+      bio: "Undergraduate director focusing on narrative drama and green-screen VFX compositing.",
+      safetySigned: true,
+      notifySessionReminders: true,
+      notifyCancellationCutoff: true,
+      notifyGearReady: true,
     },
     {
       email: "roland@prism.edu",
@@ -114,6 +121,14 @@ async function main() {
       studentId: "TECH-001",
       role: UserRole.TECHNICIAN,
       passwordHash,
+      department: "Media Lab Operations",
+      phone: "+1 (555) 890-1200",
+      station: "Counter 1 - Master Gear Desk & Inspection Vault",
+      shiftStatus: "ON_DUTY",
+      bio: "Senior media laboratory technician overseeing equipment diagnostics, camera counter logistics, and studio staging.",
+      notifySessionReminders: true,
+      notifyCancellationCutoff: true,
+      notifyGearReady: true,
     },
   ];
 
